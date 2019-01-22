@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var multer = require('multer');
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('cors')
+var cors = require('cors');
 var apiRoutes = require("./route/book.route");
-var app = express()
+var app = express();
 
 app.use(cors())
 app.use(bodyParser.json());

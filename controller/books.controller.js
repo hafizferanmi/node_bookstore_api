@@ -1,4 +1,24 @@
-const Book = require('../model/book.model');
+let Book = require('../model/book.model');
+let multer = require('multer');
+let path = require('path');
+
+
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname));
+    }
+});
+var upload = multer({ storage: storage }).single('book_file');
+
+
+// router.param('id', function(req, res, next, id) {
+//     console.log('An id value is being initiated');
+//     next();
+// });
 
 module.exports = {
 
@@ -55,6 +75,21 @@ module.exports = {
                 // console.log('no erro');
             }
         });
+    },
+
+    uploadBook: function(req, res) {
+        upload(req, res, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(req.file);
+                res.json({ error: false, message: 'File uploaded successfully' });
+            }
+        })
+    },
+
+    a: function(req, res){
+        res.json({error: false, message: 'Test'});
     }
 
 }
